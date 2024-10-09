@@ -1,0 +1,316 @@
+/* Copyright (C) 2024 Nastro_
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2{
+    font-size: 2.5em;
+}
+
+h3 {
+    font-size: 2em;
+}
+
+h4 {
+    font-size: 1.5em;
+}
+
+#id_delivery_date_day,
+#id_delivery_date_month,
+#id_delivery_date_year,
+#id_assignment_date_day,
+#id_assignment_date_month,
+#id_assignment_date_year {
+    max-width: 15%;
+}
+
+.pure-form-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-content{
+    display: flex;
+    max-width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-buttons{
+    margin: 1.5rem;
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+    color: white;
+}
+
+.button-success {
+    background-color: rgb(28, 184, 65);
+}
+
+.button-error {
+    background-color: rgb(202, 60, 60);
+}
+
+.button-warning {
+    color: #000;
+    background-color: rgb(223, 193, 20);
+}
+
+.button-large {
+    font-size: 110%;
+}
+
+.button-xlarge {
+    font-size: 125%;
+}
+
+.add-button{
+    margin: 0.5rem 0.5rem 0.5rem 0rem;
+}
+
+.benvenuto{
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.pure-g{
+    justify-content: space-evenly;
+}
+
+.card {
+    padding: 1rem;
+    max-width: 30%;
+    outline: 1px solid #444;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+h3, h2, h1 {
+    text-align: center;
+}
+
+.content{
+    max-width: 90vw;
+    margin: auto;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.flex{
+    display: flex;
+}
+
+.detail-content {
+    margin-top: 2rem;
+}
+
+.margin-tb-2rem {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.margin-lr-1rem{
+    margin: 0 1rem;
+}
+
+.pure-ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.jc-space-evenly-center{
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.link-card {
+    padding: 0.5rem 2rem;
+    max-width: 100%;
+    outline: 1px solid #444;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+a .link-card{
+    color: #222
+}
+
+a {
+    text-decoration: none;
+}
+
+select{
+    width: 80%
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+
+td img{
+    max-height: 60px;
+    vertical-align: top;
+}
+
+form label {
+    display: inline-block;
+}
+
+.delete-reset-card{
+    padding: 1rem;
+    margin: auto;
+    max-width: 30%;
+    outline: 1px solid #444;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.delete-card-w100-ai-center{
+    width: 100%;
+    align-items: center;
+}
+
+.import-card{
+    padding: 1rem;
+    margin: auto;
+    max-width: 30%;
+    outline: 1px solid #444;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.edit-card{
+    padding: 1rem;
+    margin: auto;
+    max-width: 50%;
+    outline: 1px solid #444;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.form-content-studview{
+    padding: 1rem
+}
+
+.login-card {
+    padding: 1rem;
+    margin-top: 2rem;
+    outline: 1px solid #222;
+    border-radius: 0.5rem;
+}
+
+.google-img img{
+    vertical-align: middle;
+}
+
+.login-card-logo {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.ticket-card{
+    padding: 1rem;
+    margin: 2rem auto;
+    width: 70vw;
+    outline: 1px solid #222;
+    border-radius: 0.5rem;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-content-studview-ticket textarea{
+    width: 100%;
+    resize: none;
+    margin: 1rem 0;
+}
+
+.form-content-studview-ticket input{
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.form-content-studview-ticket select{
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.dp-ilbk{
+    display: inline-block;
+}
+
+.textarea-no-resize textarea{
+    width: 100%;
+    resize: none;
+}

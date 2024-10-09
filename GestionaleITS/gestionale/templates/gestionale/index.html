@@ -1,0 +1,26 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="benvenuto">
+    <h1>Benvenuto, {{ user.first_name }} {{ user.last_name }}</h1>
+</div>
+<div class="pure-g">
+    <div class="pure-u-1-2 card">
+        <div class="card-body">
+            <h4>Numero Computer Disponibili: {{ computers_available_count }}</h4>
+        </div>
+    </div>
+    <div class="pure-u-1-2 card">
+        <div>
+            <h4>Numero Accessori Disponibili: {{ accessories_available_count }}</h4>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

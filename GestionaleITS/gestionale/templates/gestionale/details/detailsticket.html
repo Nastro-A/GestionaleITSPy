@@ -1,0 +1,43 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="flex-col">
+	<div class="ticket-card margin-tb-2rem">
+		<ul class="pure-ul">
+			<h3>Titolo: {{ ticket.title }}</h3>
+			<li>Id Ticket: {{ ticket.id }}</li>
+			<li>Studente: {{ ticket.id_student.first_name }} {{ ticket.id_student.last_name }}</li>
+			</br>
+			<li>Contenuto: {{ ticket.content }}</li>
+			</br>
+			<li>Data del Ticket: {{ ticket.submit_date }}</li>
+			<li>Data di Chiusura: {{ ticket.closing_date }}</li>
+			<li>Utente Staff assegnato: {{ ticket.id_user_in_charge }}</li>
+		</ul>
+	</div>
+	<div>
+	  <div class="flex">
+		{% if not ticket.is_closed %}
+		<a href="/tickets" class="pure-button pure-button-primary margin-lr-1rem">Ritorna ai Ticket</a>
+		<a href="/delete/ticket/{{ ticket.id }}" class="pure-button button-warning margin-lr-1rem">Chiudi Ticket</a>
+
+		{% else %}
+		<a href="/tickets/closed" class="pure-button pure-button-primary margin-lr-1rem">Ritorna ai Ticket</a>
+		{% endif %}
+
+		{% if not ticket.is_closed or ticket.closing_date == None %}
+		<form action="/take/ticket/{{ ticket.id }}" , method="POST">
+			{% csrf_token %}
+			<button type="submit" class="pure-button pure-button-primary margin-lr-1rem">Prendi in carico</a>
+		{% endif %}
+</from>
+</div>
+	</div>
+	{% endif %}
+	{% endblock %}

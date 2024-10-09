@@ -1,0 +1,59 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+{% if user.is_authenticated %}
+<nav>
+    <div class="pure-menu pure-menu-horizontal">
+        <a href="/" class="pure-menu-heading pure-menu-link"><img src="{% static 'images/xlogo-itsaltoadriatico.svg' %}" width="150px"></a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item">
+                    <a href="/storage" class="pure-menu-link">Magazzino</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="/suppliers" class="pure-menu-link">Fornitori</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="/courses" class="pure-menu-link">Corsi</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="/students" class="pure-menu-link">Studenti</a>
+                </li>
+                <li class="pure-menu-item">
+                  <a href="/assignment" class="pure-menu-link">Assegnazione</a>
+                </li>
+		<li class="pure-menu-item">
+		  <a href="/tickets" class="pure-menu-link">Tickets</a>
+		  </li>
+                <li class="pure-menu-item">
+                    <a href="/accounts/logout" class="pure-menu-link">Log Out</a>
+        </ul>
+    </div>
+</nav>
+{% else %}
+<div>
+    <h1>You are not authenticated</h1>
+    <a href="{% url 'login' %}" class="button-xlarge pure-button">Log In</a>
+</div>
+
+{% endif %}
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="delete-reset-card">
+    <div>
+        <p>Stai dimettendo: {{ student }}</p>
+
+        <form method="post" action="/delete/student/{{ id }}" class="pure-form pure-form-stacked">
+            {% csrf_token %}
+            <div class="form-content delete-card-w100-ai-center">
+            {{ form }}
+            </div>
+            <div class="form-buttons">
+            <button type="submit" class="pure-button button-warning">Accetta</button>
+            <a href="/details/course/{{ course.id }}" class="pure-button pure-button-primary">Rifiuta</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

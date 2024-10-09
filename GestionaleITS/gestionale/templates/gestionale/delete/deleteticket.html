@@ -1,0 +1,26 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="delete-reset-card">
+    <div>
+      <h3>Sei sicuro di chiudere il ticket {{ id }}?</h3>
+      
+        <form method="post" action="/delete/ticket/{{ id }}">
+          {% csrf_token %}
+	  <div class="form-buttons">
+            <button type="submit" class="pure-button button-warning">Si</button>
+            <a href="/tickets" class="pure-button pure-button-primary">No</a>
+	    </div>
+	</form>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

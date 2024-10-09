@@ -1,0 +1,181 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="detail-content">
+<table class="pure-table pure-table-horizontal width-100">
+    <thead>
+    <tr>
+        <th>Id Prodotto</th>
+        <th>Tipo Prodotto</th>
+        <th>Nome Prodotto</th>
+        <th>Qt. Prodotto</th>
+        <th>Qt. Disponibile</th>
+        <th>Note</th>
+        <th>Brand</th>
+        <th>Linea</th>
+        <th>Cpu</th>
+        <th>Ram</th>
+        <th>Storage</th>
+        <th>Prezzo</th>
+        <th>Data di Consegna</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ bundle.id }}</td>
+        <td>{{ bundle.product_type }}</td>
+        <td>{{ bundle.product_name }}</td>
+        <td>{{ bundle.qt }}</td>
+        <td>{{ bundle.qt_available }}</td>
+        <td>{{ bundle.notes }}</td>
+        <td>{{ bundle.brand }}</td>
+        <td>{{ bundle.line }}</td>
+        <td>{{ bundle.cpu }}</td>
+        <td>{{ bundle.ram }}</td>
+        <td>{{ bundle.storage_size }}</td>
+        <td>{{ bundle.price }}</td>
+        <td>{{ bundle.delivery_date }}</td>
+    </tr>
+    </tbody>
+</table>
+<ul class="margin-tb-2rem">
+    <li>
+        Fornitore: {{ supplier }}
+    </li>
+</ul>
+{% if bundle_type == "Computer" %}
+<table class="pure-table pure-table-horizontal width-100">
+    <thead>
+    <tr>
+        <td>Id Computer</td>
+        <td>Nome Studente</td>
+        <td>Status</td>
+        <td>Data di Assegnazione</td>
+        <td>Motivazione di Assegnazione</td>
+        <td>Data di Restituzione</td>
+        <td>Motivazione di Restituzione</td>
+        <td>Eol</td>
+        <td>Data Eol</td>
+        <td>Note</td>
+        <td>Cespite</td>
+        <td>Seriale</td>
+        <td>Azioni</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for computer in computers %}
+    <tr>
+        <td> {{ computer.id }}</td>
+        <td> {{ computer.id_student.first_name }} {{ computer.id_student.last_name }}</td>
+        <td> {{ computer.status }}</td>
+        <td> {{ computer.assignment_date }}</td>
+        <td> {{ computer.assignment_motivation }}</td>
+        <td> {{ computer.return_date }}</td>
+        <td> {{ computer.return_motivation }}</td>
+        <td> {{ computer.eol }}</td>
+        <td> {{ computer.eol_date }}</td>
+        <td> {{ computer.notes }}</td>
+        <td> {{ computer.cespite }}</td>
+        <td> {{ computer.serial }}</td>
+        <td>
+            <a href="/edit/computer/{{ computer.id }}" class="pure-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+            </a>
+            <a href="/delete/computer/{{ computer.id }}" class="pure-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                    <path
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                </svg>
+            </a>
+            {% if computer.status != "in_stock" %}
+            <a href="/reset/computer/{{ computer.id }}" class="pure-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+                </svg>
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% elif bundle_type == "Accessory" %}
+<table class="pure-table pure-table-horizontal width-100">
+    <thead>
+    <tr>
+        <td>Id Accessorio</td>
+        <td>Descrizione</td>
+        <td>Nome Studente</td>
+        <td>Status</td>
+        <td>Data di Assegnazione</td>
+        <td>Motivazione di Assegnazione</td>
+        <td>Data di Restituzione</td>
+        <td>Motivazione di Restituzione</td>
+        <td>Note</td>
+        <td>Azioni</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for accessory in accessories %}
+    <tr>
+        <td> {{ accessory.id }}</td>
+        <td> {{ accessory.description }}</td>
+        <td> {{ accessory.id_student.first_name }} {{ accessory.id_student.last_name }}</td>
+        <td> {{ accessory.status }}</td>
+        <td> {{ accessory.assignment_date }}</td>
+        <td> {{ accessory.assignment_motivation }}</td>
+        <td> {{ accessory.return_date }}</td>
+        <td> {{ accessory.return_motivation }}</td>
+        <td> {{ accessory.notes }}</td>
+        <td>
+            <a href="/edit/accessory/{{ accessory.id }}" class="pure-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+            </a>
+            <a href="/delete/accessory/{{ accessory.id }}" class="pure-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                    <path
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                </svg>
+            </a>
+            {% if accessory.status != "in_stock" %}
+            <a href="/reset/accessory/{{ accessory.id }}" class="pure-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+                </svg>
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    </div>
+{% endif %}
+{% endif %}
+{% endblock %}

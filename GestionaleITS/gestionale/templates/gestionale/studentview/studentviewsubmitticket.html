@@ -1,0 +1,32 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/studentviewbase.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if err == True %}
+<div>
+    <p>L'inserimento è incompleto o errato!</p>
+</div>
+{% endif %}
+<div class="margin-tb-2rem">
+  <h3>Stai creando un nuovo ticket</h3>
+</div>
+<div class="edit-card">
+<form action="/studentview/submit/ticket" method="post" class="pure-form pure-form-2 pure-form-stacked">
+
+  {% csrf_token %}
+  <div class="form-content-studview-ticket"
+       {{ form }}
+       </div>
+<div class="form-button">
+  <button type="submit" class="pure-button pure-button-primary">Aggiungi</button>
+  <button type="reset" class="pure-button button-warning">Reset</button>
+  </div>
+</form>
+</div>
+{% endif %}
+{% endblock %}

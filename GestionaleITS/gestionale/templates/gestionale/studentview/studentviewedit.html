@@ -1,0 +1,31 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/studentviewbase.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if err == True %}
+<div>
+    <p>{{ err_str }}</p>
+</div>
+{% endif %}
+<div class="margin-tb-2rem">
+<h3>Stai modificando il tuo profilo: </h3>
+</div>
+<div class="edit-card">
+    <form action="/studentview/edit" method="post" enctype="multipart/form-data" class="pure-form">
+    {% csrf_token %}
+        <div class="form-content-studview">
+    {{ form }}
+            </div>
+        <div class="form-button">
+    <button type="submit" class="pure-button pure-button-primary">Modifica</button>
+    <button type="reset" class="pure-button button-warning">Reset</button>
+            </div>
+</form>
+    </div>
+{% endif %}
+{% endblock %}

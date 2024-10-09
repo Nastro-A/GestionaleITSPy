@@ -1,0 +1,94 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/studentviewbase.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<h2>Benvenuto, {{ user.first_name }} {{ user.last_name }}</h2>
+</div>
+<div class="flex jc-space-evenly-center">
+    <div>
+    <ul class="pure-ul">
+    <li>Immagine Profilo: <img src="/media/{{ student.profile_image }}" alt="profile_image"></li>
+    </ul>
+        </div>
+    <div>
+<ul class="pure-ul">
+    <li>Id Student: {{ student.id }}</li>
+    <li>Nome: {{ student.first_name }}</li>
+    <li>Cognome: {{ student.last_name }}</li>
+    <li>Data di Nascita: {{ student.birth_date }}</li>
+    <li>Codice Fiscale: {{ student.codice_fiscale }}</li>
+    <li>Sesso: {{ student.gender }}</li>
+    <li>Id Studente Corso: {{ student.id_student_course }}</li>
+    <li>Sigla Corso: {{ student.course_acronym }}</li>
+</ul>
+        </div>
+    <div>
+<ul class="pure-ul">
+    <li>Email Studente: {{ student.email_user }}</li>
+    <li>Numero di Telefono: {{ student.phone_number }}</li>
+    <li>Comune di Residenza: {{ student.municipality_residence }}</li>
+    <li>Provincia di Residenza: {{ student.province_residence }}</li>
+    <li>Comune di Nascita: {{ student.municipality_birth }}</li>
+    <li>Provincia di Nascita: {{ student.province_birth }}</li>
+    <li>Nazione di Nascita: {{ student.nation_birth }}</li>
+    <li>Data di Dimissioni: {{ student.resignation_date }}</li>
+    <li>Status Studente: {{ student.student_status }}</li>
+    <li>Corso: {{ student.course_id }}</li>
+</ul>
+        </div>
+</div>
+<div class="margin-tb-2rem">
+<h3>Computer assegnati</h3>
+</div>
+<table class="pure-table pure-table-horizontal width-100">
+    <thead>
+    <tr>
+        <td>Id Computer</td>
+        <td>Status</td>
+        <td>Data di Assegnazione</td>
+        <td>Cespite</td>
+        <td>Seriale</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for computer in computers %}
+    <tr>
+        <td> {{ computer.id }}</td>
+        <td> {{ computer.status }}</td>
+        <td> {{ computer.assignment_date }}</td>
+        <td> {{ computer.cespite }}</td>
+        <td> {{ computer.serial }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="margin-tb-2rem">
+<h3>Accessori assegnati</h3>
+</div>
+<table class="pure-table pure-table-horizontal width-100">
+    <thead>
+    <tr>
+        <td>Id Accessorio</td>
+        <td>Descrizione</td>
+        <td>Status</td>
+        <td>Data di Assegnazione</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for accessory in accessories %}
+    <tr>
+        <td> {{ accessory.id }}</td>
+        <td> {{ accessory.description }}</td>
+        <td> {{ accessory.status }}</td>
+        <td> {{ accessory.assignment_date }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

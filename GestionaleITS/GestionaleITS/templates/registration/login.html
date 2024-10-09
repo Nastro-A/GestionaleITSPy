@@ -1,0 +1,31 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "registration/base.html" %}
+{% load socialaccount %}
+{% load static %}
+{% block content %}
+<div class="login-card">
+  <div class="login-card-logo">
+  <a href="http://www.itsaltoadriatico.it">
+    <img src="{% static 'images/xlogo-itsaltoadriatico.svg' %}" width="200px">
+  </a>
+  </div>
+<h2>Login</h2>
+
+<form method="post" class="pure-form pure-form-stacked">
+  {% csrf_token %}
+  <div class="form-content">
+  {{ form }}
+    </div>
+  <div class="form-button">
+  <button type="submit" class="pure-button">Log In</button> 
+  <a href="{% provider_login_url 'google' %}" class="google-img">
+    <img src="{% static 'images/sign_in_with_google.svg' %}">
+  </a>
+</div>
+</form>
+  </div>
+{% endblock %}
