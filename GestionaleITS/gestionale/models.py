@@ -118,7 +118,7 @@ class Computer(models.Model):
     notes = models.CharField(max_length=255, blank=True, null=True)
     cespite = models.CharField(max_length=255, blank=True, null=True)
     serial = models.CharField(max_length=255, unique=True)
-    # is_deleted = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Id Studente: {self.id_student}, Id Bundle: {self.id_bundle}, Status: {self.status}, Data di assegnazione: {self.assignment_date}, Motivazione di Assegnazione: {self.assignment_motivation}, Data di restituzione: {self.return_date}, Motivazione di restituzione: {self.return_motivation}, Eol: {self.eol}, Data di Eol: {self.eol_date}, Note: {self.notes}, Cespite: {self.cespite}, Seriale: {self.serial}"
@@ -135,7 +135,7 @@ class Accessory(models.Model):
     return_date = models.DateField(blank=True, null=True)
     return_motivation = models.CharField(max_length=255, blank=True, null=True)
     notes = models.CharField(max_length=255, blank=True, null=True)
-    # is_deleted = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Id Studente: {self.id_student}, Id Bundle: {self.id_bundle}, Name: {self.name}, Status: {self.status}, Data di assegnazione: {self.assignment_date}, Motivazione di Assegnazione: {self.assignment_motivation}, Data di restituzione: {self.return_date}, Motivazione di restituzione: {self.return_motivation}, Note: {self.notes}"

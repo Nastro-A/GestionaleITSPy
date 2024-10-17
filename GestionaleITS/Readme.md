@@ -40,7 +40,6 @@ GOOGLE_KEY= (generally empty)
           - BUILD=false #if true creates the superuser, if already done please set it false
         expose:
           - "8000" #must match with env port
-          - "8000/udp"
         networks:
           - nginx
         depends_on:
