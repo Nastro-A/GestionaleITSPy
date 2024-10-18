@@ -61,7 +61,7 @@ def delete_supplier(request, id):
         record = Record()
         supplier_copy= copy.deepcopy(supplier)
         record.prev_product_detail = supplier_copy
-        supplier.delete()
+        supplier.is_deleted = True
 
         record.date = datetime.now().date()
         record.action = "reset"

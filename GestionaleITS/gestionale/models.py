@@ -25,6 +25,7 @@ class Supplier(models.Model):
     supplier_email = models.EmailField(max_length=255)
     partita_iva = models.CharField(max_length=255)
     codice_societa = models.CharField(max_length=255)
+    is_deleted = models.BooleanField(default=False)
 
 
     def __str__(self):

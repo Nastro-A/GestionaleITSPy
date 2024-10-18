@@ -2,6 +2,5 @@
 .venv
 .gitignore
 *.env
-*.sqlite3
 docker-compose.yaml
 dockerfile

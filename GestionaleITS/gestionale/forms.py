@@ -85,6 +85,7 @@ class SupplierForm(forms.ModelForm):
             "partita_iva": "Partita IVA",
             "codice_societa": "Codice Società"
         }
+        exclude = ["is_deleted"]
 
 
 class ComputerForm(forms.ModelForm):

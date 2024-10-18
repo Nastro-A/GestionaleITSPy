@@ -21,7 +21,7 @@ def storage(request):
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def suppliers(request):
-    suppliers = Supplier.objects.all()
+    suppliers = Supplier.objects.filter(is_deleted = False)
     if request.method == "GET":
         return render(request, "gestionale/list/suppliers.html", {
             "suppliers": suppliers
