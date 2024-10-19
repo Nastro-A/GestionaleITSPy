@@ -77,6 +77,8 @@ networks:
 
 # TODO
 
+- Default value of association "Pagamento effettuato"
+- import of storage, computers, courses.
 - Tables Sorting with filters
 
 # Licence

@@ -202,7 +202,6 @@ class StudentForm(forms.ModelForm):
 
 class AssignmentComputerForm(forms.Form):
     choice= (
-        ("", "Seleziona il motivo"),
         ("deposit_paid", "Pagamento Effettuato"),
         ("replacement", "Sostitutivo"),
         ("temporary", "Temporaneo")
@@ -216,7 +215,6 @@ class AssignmentComputerForm(forms.Form):
 
 class AssignmentAccessoryForm(forms.Form):
     choice= (
-        ("", "Seleziona il motivo"),
         ("needed", "Necessario"),
         ("replacement", "Sostitutivo"),
         ("temporary", "Temporaneo")
@@ -229,7 +227,6 @@ class AssignmentAccessoryForm(forms.Form):
 
 class ReturnComputerDateForm(forms.Form):
     choice = (
-        ("", "Seleziona il motivo"),
         ("student_resigned", "Studente Dimesso"),
         ("damaged", "Danneggiato"),
         ("not_necessary", "Non più necessario")
@@ -239,7 +236,6 @@ class ReturnComputerDateForm(forms.Form):
 
 class ReturnAccessoryDateForm(forms.Form):
     choice = (
-        ("", "Seleziona il motivo"),
         ("not_necessary", "Non più necessario"),
         ("damaged", "Danneggiato"),
     )

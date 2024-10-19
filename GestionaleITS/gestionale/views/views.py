@@ -11,7 +11,7 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.defaults import bad_request
 
-from ..forms import CSVUpdateForm
+from ..forms import Bundle, CSVUpdateForm
 from ..models import Computer, Accessory, Student, Course, Record, Ticket
 
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -97,6 +97,92 @@ def import_students(request):
         return render(request, "gestionale/importstudents.html", {
             "form": form
         })
+
+def import_bundle(request):
+    if request.method == "POST":
+        form = CSVUpdateForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES["file"]
+            if not csv_file.endswith(".csv"):
+                form = CSVUpdateForm()
+                err = True
+                return render(request, "gestionale/import/bundle.html",{
+                    "err": err, "form": form
+                })
+            try:
+                record = Record()
+                record.date = datetime.now().date()
+                record.action = "import"
+                record.product = "bundle"
+                record.user = request.user
+                record.save()
+
+                csv_data = csv_file.read().decode("utf-8").splitlines()
+                reader = csv.DictReader(csv_data)
+                for row in reader:
+                    pass
+            except:
+                 if request.method == "POST":
+        form = CSVUpdateForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES["file"]
+            if not csv_file.endswith(".csv"):
+                form = CSVUpdateForm()
+                err = True
+                return render(request, "gestionale/import/bundle.html",{
+                    "err": err, "form": form
+                })
+            try:
+                record = Record()
+                record.date = datetime.now().date()
+                record.action = "import"
+                record.product = "bundle"
+                record.user = request.user
+                record.save()
+
+                csv_data = csv_file.read().decode("utf-8").splitlines()
+                reader = csv.DictReader(csv_data)
+                for row in reader:
+                    pass
+            except:
+                pass
+    passpass
+    pass
+
+def import_computers(request):
+ if request.method == "POST":
+        form = CSVUpdateForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES["file"]
+            if not csv_file.endswith(".csv"):
+                form = CSVUpdateForm()
+                err = True
+                return render(request, "gestionale/import/computers.html",{
+                    "err": err, "form": form
+                })
+            try:
+                record = Record()
+                record.date = datetime.now().date()
+                record.action = "import"
+                record.product = "computers"
+                record.user = request.user
+                record.save()
+
+                csv_data = csv_file.read().decode("utf-8").splitlines()
+                reader = csv.DictReader(csv_data)
+                for row in reader:
+                    bundle= get_object_or_404(Bundle, id = row["Id Bundle"])
+                    
+                    pass
+            except:
+                pass
+
+def import_accessories(request):
+    pass
+
+def import_courses(request):
+    pass
+
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff )
 def toggle_course(request, id):
