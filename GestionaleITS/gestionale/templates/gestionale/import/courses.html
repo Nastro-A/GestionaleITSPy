@@ -1,0 +1,28 @@
+<!-- Copyright (C) 2024 Nastro_ -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+{% extends "gestionale/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if err == True %}
+<div>
+    {{ e }}
+</div>
+{% endif %}
+<div class="import-card">
+    <div>
+<form action="/import/courses" method="post" enctype="multipart/form-data" class="pure-form pure-form-stacked">
+    {% csrf_token %}
+    <div class="form-content">
+    {{ form }}
+    </div>
+    <button type="submit" class="pure-button pure-button-primary">Carica</button>
+    <button type="reset" class="pure-button button-warning">Reset</button>
+</form>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

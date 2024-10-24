@@ -64,7 +64,7 @@ def delete_supplier(request, id):
         supplier.is_deleted = True
 
         record.date = datetime.now().date()
-        record.action = "reset"
+        record.action = "delete"
         record.product = "supplier"
         record.user = request.user
         record.save()

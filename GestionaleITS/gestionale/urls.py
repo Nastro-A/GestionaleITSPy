@@ -27,7 +27,7 @@ urlpatterns = [
     
     path("add/bundle", views_add.add_bundle, name="add_bundle"),
     path("add/supplier", views_add.add_supplier, name="add_supplier"),
-    path("add/serial", views_add.add_serial, name="add_serial"),
+    path("add/serial",  views_add.add_serial, name="add_serial"),
     path("add/accessory", views_add.add_accessory, name="add_accessory"),
     path("add/course", views_add.add_course, name="add_course"),
     path("add/ticket", views_add.add_ticket, name="add_ticket"),
@@ -57,6 +57,8 @@ urlpatterns = [
     path("reset/accessory/<int:id>", views_reset.reset_accessory, name="reset_accessory"),
 
     path("import/students", views.import_students, name="import_students"),
+    path("import/serials", views.import_serials, name="import_serials"),
+    path("import/courses", views.import_courses, name="import_courses"),
     
     path("toggle/course/<int:id>", views.toggle_course, name="toggle_course"),
 

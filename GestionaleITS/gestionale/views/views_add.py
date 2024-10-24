@@ -87,7 +87,7 @@ def add_supplier(request):
             return render(request, "gestionale/add/addsupplier.html", {
                 "form": form, "err": err
             })
-        return redirect('storage')
+        return redirect('suppliers')
     else:
         form = SupplierForm()
         return render(request, "gestionale/add/addsupplier.html", {
@@ -95,7 +95,7 @@ def add_supplier(request):
         })
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
-def add_serial(request):
+def add_serial(request, form_serial=None):
     bundle = Bundle.objects.last()
     qt = range(bundle.qt)
     if request.method == "POST":
@@ -122,9 +122,8 @@ def add_serial(request):
                         record.user = request.user
                         record.save()
 
-
-
                 return redirect('storage')
+            
         except ValidationError:
             err = True
             err_str = "L'inserimento é errato o incompleto!"

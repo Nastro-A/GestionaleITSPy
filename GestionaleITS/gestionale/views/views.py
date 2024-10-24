@@ -43,7 +43,7 @@ def import_students(request):
             if not csv_file.name.endswith(".csv"):
                 form = CSVUpdateForm()
                 err = True
-                return render(request, "gestionale/importstudents.html", {
+                return render(request, "gestionale/import/students.html", {
                     "err": err, "form": form
                 })
             try:
@@ -82,82 +82,88 @@ def import_students(request):
             except Exception as e:
                 form = CSVUpdateForm()
                 err = True
-                return render(request, "gestionale/importstudents.html", {
+                return render(request, "gestionale/import/students.html", {
                     "err": err, "form": form, "e": e
                 })
             return redirect('import_students')
         else:
             form = CSVUpdateForm()
             err = True
-            return render(request, "gestionale/importstudents.html", {
+            return render(request, "gestionale/import/students.html", {
                  "err": err, "form": form
             })
     else:
         form = CSVUpdateForm()
-        return render(request, "gestionale/importstudents.html", {
+        return render(request, "gestionale/import/students.html", {
             "form": form
         })
 
-def import_bundle(request):
+def import_courses(request):
+     if request.method == "POST":
+        form = CSVUpdateForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES["file"]
+            if not csv_file.name.endswith(".csv"):
+                form = CSVUpdateForm()
+                err = True
+                return render(request, "gestionale/import/courses.html",{
+                    "err": err, "form": form
+                })
+            try:
+                record = Record()
+                record.date = datetime.now().date()
+                record.action = "import"
+                record.product = "courses"
+                record.product_detail = csv_file
+                record.user = request.user
+                record.save()
+
+                csv_data = csv_file.read().decode("utf-8").splitlines()
+                reader = csv.DictReader(csv_data)
+                for row in reader:
+                    course = Course()
+                    course.course_name = row["Nome"]
+                    course.course_name_extended = row["Nome Esteso"]
+                    course.course_code = row["Codice"]
+                    course.course_year = row["Anno"]
+                    course.course_location = row["Posizione"]
+                    course.student_number = row["Numero Studenti"]
+                    if row["Status"] == 0:
+                        course.course_status = False
+                    else:
+                        course.course_status = True
+                        
+                    course.save()
+                    
+                return redirect("courses")
+            except Exception as e:
+                form = CSVUpdateForm()
+                err = True
+                return render(request, "gestionale/import/courses.html", {
+                    "err": err, "form": form, "e": e})
+
+        else:
+            form = CSVUpdateForm()
+            err = True
+            return render(request, "gestionale/import/courses.html", {
+                 "err": err, "form": form
+            })
+     else:
+        form = CSVUpdateForm()
+        return render(request, "gestionale/import/courses.html", {
+            "form": form
+        })
+          
+
+def import_serials(request):
     if request.method == "POST":
         form = CSVUpdateForm(request.POST, request.FILES)
         if form.is_valid():
             csv_file = request.FILES["file"]
-            if not csv_file.endswith(".csv"):
+            if not csv_file.name.endswith(".csv"):
                 form = CSVUpdateForm()
                 err = True
-                return render(request, "gestionale/import/bundle.html",{
-                    "err": err, "form": form
-                })
-            try:
-                record = Record()
-                record.date = datetime.now().date()
-                record.action = "import"
-                record.product = "bundle"
-                record.user = request.user
-                record.save()
-
-                csv_data = csv_file.read().decode("utf-8").splitlines()
-                reader = csv.DictReader(csv_data)
-                for row in reader:
-                    pass
-            except:
-                 if request.method == "POST":
-        form = CSVUpdateForm(request.POST, request.FILES)
-        if form.is_valid():
-            csv_file = request.FILES["file"]
-            if not csv_file.endswith(".csv"):
-                form = CSVUpdateForm()
-                err = True
-                return render(request, "gestionale/import/bundle.html",{
-                    "err": err, "form": form
-                })
-            try:
-                record = Record()
-                record.date = datetime.now().date()
-                record.action = "import"
-                record.product = "bundle"
-                record.user = request.user
-                record.save()
-
-                csv_data = csv_file.read().decode("utf-8").splitlines()
-                reader = csv.DictReader(csv_data)
-                for row in reader:
-                    pass
-            except:
-                pass
-    passpass
-    pass
-
-def import_computers(request):
- if request.method == "POST":
-        form = CSVUpdateForm(request.POST, request.FILES)
-        if form.is_valid():
-            csv_file = request.FILES["file"]
-            if not csv_file.endswith(".csv"):
-                form = CSVUpdateForm()
-                err = True
-                return render(request, "gestionale/import/computers.html",{
+                return render(request, "gestionale/import/serials.html",{
                     "err": err, "form": form
                 })
             try:
@@ -165,24 +171,42 @@ def import_computers(request):
                 record.date = datetime.now().date()
                 record.action = "import"
                 record.product = "computers"
+                record.product_detail = csv_file
                 record.user = request.user
                 record.save()
 
                 csv_data = csv_file.read().decode("utf-8").splitlines()
                 reader = csv.DictReader(csv_data)
                 for row in reader:
-                    bundle= get_object_or_404(Bundle, id = row["Id Bundle"])
-                    
-                    pass
-            except:
-                pass
+                    bundle = get_object_or_404(Bundle, id = row["Id Bundle"])
+                    computer = Computer()
+                    computer.id_bundle = bundle
+                    computer.status = "in_stock"
+                    computer.serial = row["Seriale"]
+                    computer.is_deleted = False
+                    computer.eol = False
+                    computer.eol_date = None
+                    computer.save()
 
-def import_accessories(request):
-    pass
+                return redirect("storage")
+            except Exception as e:
+                form = CSVUpdateForm()
+                err = True
+                return render(request, "gestionale/import/serials.html", {
+                    "err": err, "form": form, "e": e})
 
-def import_courses(request):
-    pass
-
+        else:
+            form = CSVUpdateForm()
+            err = True
+            return render(request, "gestionale/import/serials.html", {
+                 "err": err, "form": form
+            })
+    else:
+        form = CSVUpdateForm()
+        return render(request, "gestionale/import/serials.html", {
+            "form": form
+        })
+            
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff )
 def toggle_course(request, id):
