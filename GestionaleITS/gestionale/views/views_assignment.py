@@ -11,7 +11,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.defaults import bad_request
 
-from ..forms import AssignmentComputerForm, AssignmentAccessoryForm
+from ..forms import AssignmentComputerForm, AssignmentAccessoryForm, CespiteForm
 from ..models import Computer, Accessory, Student, Course, Record
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
@@ -35,7 +35,6 @@ def assignment_computer(request):
                 computer_copy = copy.deepcopy(computer)
                 record.prev_product_detail = computer_copy
                 eol_date = (form["assignment_date"] + timedelta(days=1460))
-                computer.cespite = form["cespite"]
                 computer.status = "assigned"
                 computer.id_student = student
                 computer.assignment_date = form["assignment_date"]
@@ -121,3 +120,44 @@ def assignment_accessory(request):
         return render(request, "gestionale/assignment/assignment_accessory.html", {
             "form": form, "err": err, "err_str": err_str
         })
+    
+@user_passes_test(lambda u: u.is_superuser or u.is_staff)
+def assignment_cespite(request):
+    if request.method == "POST":
+        form = CespiteForm(request.POST)
+        if form.is_valid():
+            form = form.cleaned_data
+            try:
+                record = Record()
+                computer = get_object_or_404(Computer, serial=form["serial"])
+                computer_copy = copy.deepcopy(computer)
+                computer.cespite = form["cespite"]
+                computer.save
+                
+                record.date = datetime.now().date()
+                record.action = "assignment"
+                record.product = "cespite"
+                record.product_detail = computer
+                record.prev_product_detail = computer_copy
+                record.user = request.user
+                record.save()
+            except Http404:
+                form = CespiteForm()
+                err = True
+                err_str = "Uno o più dei valori inseriti non é stato trovato"
+                return render(request, "gestionale/assignment/cespite.html", {
+                    "err": err, "err_str": err_str, "form": form
+                })
+            return redirect("assignment_cespite")
+        else:
+            form = CespiteForm()
+            err = True
+            err_str = "L'inserimento é incompleto o errato!"
+            return render(request, "gestionale/assignment/cespite.html", {
+                "form": form, "err": err, "err_str": err_str})
+        
+    else:
+        form = CespiteForm()
+        return render(request, "gestionale/assignment/cespite.html", {
+            "form": form})
+        

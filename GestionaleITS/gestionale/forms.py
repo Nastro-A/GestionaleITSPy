@@ -107,6 +107,9 @@ class ComputerForm(forms.ModelForm):
             "serial": "Seriale"
         }
 
+class CespiteForm(forms.Form):
+    cespite = forms.CharField(label="Cespite")
+    seriale = forms.CharField(label="Seriale")
 
 class AccessoryForm(forms.ModelForm):
     class Meta:
@@ -208,7 +211,6 @@ class AssignmentComputerForm(forms.Form):
     )
     course_code = forms.CharField(label="Codice Corso", max_length=255)
     codice_fiscale = forms.CharField(label="Codice Fiscale", max_length=255)
-    cespite = forms.CharField(label="Cespite", max_length=255)
     serial = forms.CharField(label="Seriale", max_length=255)
     assignment_date = forms.DateField(widget=SelectDateWidget(), label="Data di assegnazione", initial=datetime.now().date)
     assignment_motivation = forms.ChoiceField(choices=choice)

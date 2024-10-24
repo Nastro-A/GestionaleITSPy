@@ -24,7 +24,7 @@ urlpatterns = [
     path("assignment", views_assignment.assignment, name="assignment"),
     path("assignment/computer", views_assignment.assignment_computer, name="assignment_computer"),
     path("assignment/accessory", views_assignment.assignment_accessory, name="assignment_accessory"),
-    
+    path("assignment/cespite", views_assignment.assignment_cespite, name="assignment_cespite"),
     path("add/bundle", views_add.add_bundle, name="add_bundle"),
     path("add/supplier", views_add.add_supplier, name="add_supplier"),
     path("add/serial",  views_add.add_serial, name="add_serial"),

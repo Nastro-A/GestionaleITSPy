@@ -58,15 +58,14 @@ def import_students(request):
                 csv_data = csv_file.read().decode("utf-8").splitlines()
                 reader = csv.DictReader(csv_data)
                 for row in reader:
-                    course = get_object_or_404(Course, course_code=row["Codice Corso"])
-                    birth_date = datetime.strptime(row["DataNascita"], "%d/%m/%Y")
+                    course = get_object_or_404(Course, course_code=row[""])
+                    birth_date = datetime.strptime(row["DataNascita"], "%m/%d/%Y")
                     student = Student()
-                    student.id_student_course = row["IDAllievoCorso"]
                     student.codice_fiscale = row["CodiceFiscale"]
-                    student.course_acronym = row["SiglaCorso"]
+                    student.course_acronym = row[""]
                     student.last_name = row["Cognome"]
                     student.first_name = row["Nome"]
-                    student.email_user = row["EmailUser"]
+                    student.email_user = row["EmailGSuite"]
                     student.phone_number = row["Tel"]
                     student.municipality_residence = row["ComuneRes"]
                     student.province_residence = row["ProvRes"]
@@ -75,7 +74,7 @@ def import_students(request):
                     student.municipality_birth = row["ComuneNascita"]
                     student.province_birth = row["ProvNascita"]
                     student.resignation_date = None if row["DataDimissioni"]=="" else row["DataDimissioni"]
-                    student.gender = row["Genere"]
+                    student.gender = row["Sex"]
                     student.nation_birth = row["NazioneNasc"]
                     student.course_id = course
                     student.save()

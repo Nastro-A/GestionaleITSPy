@@ -87,7 +87,6 @@ class Student(models.Model):
     birth_date = models.DateField()
     codice_fiscale = models.CharField(max_length=255)
     gender = models.CharField(max_length=255)
-    id_student_course = models.IntegerField(blank= True, null=True)
     course_acronym = models.CharField(max_length=255)
     email_user = models.EmailField(max_length=255)
     phone_number = models.CharField(max_length=255)
