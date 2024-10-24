@@ -76,9 +76,7 @@ networks:
 ```
 
 # TODO
-- Una schermata di associazione per corso
-- lunedí serve un foglio con il codice del corso 
-- Visualizzo l'elenco degli studenti
+
 - Default value of association "Pagamento effettuato"
 - import of storage, computers, courses.
 - Tables Sorting with filters

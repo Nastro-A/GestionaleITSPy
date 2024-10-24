@@ -7,7 +7,9 @@
 {% load static %}
 {% block content %}
 {% if user.is_authenticated %}
+{% if bundle.product_type == "Computer" %}
 <a href="/import/serials" class="pure-button pure-button-primary add-button">Importa Computer</a>
+{% endif  %}
 <div class="detail-content">
 <table class="pure-table pure-table-horizontal width-100">
     <thead>

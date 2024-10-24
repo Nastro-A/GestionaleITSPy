@@ -91,7 +91,7 @@ def delete_computer(request, id):
         computer.delete()
 
         record.date = datetime.now().date()
-        record.action = "reset"
+        record.action = "delete"
         record.product = "computer"
         record.user = request.user
         record.save()
@@ -118,8 +118,8 @@ def delete_accessory(request, id):
         accessory.delete()
 
         record.date = datetime.now().date()
-        record.action = "reset"
-        record.product = "computer"
+        record.action = "delete"
+        record.product = "accessory"
         record.user = request.user
         record.save()
 

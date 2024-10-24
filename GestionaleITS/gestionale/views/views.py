@@ -58,14 +58,14 @@ def import_students(request):
                 csv_data = csv_file.read().decode("utf-8").splitlines()
                 reader = csv.DictReader(csv_data)
                 for row in reader:
-                    course = get_object_or_404(Course, course_code=row[""])
+                    course = get_object_or_404(Course, course_code=row["CodiceCorso"])
                     birth_date = datetime.strptime(row["DataNascita"], "%m/%d/%Y")
                     student = Student()
                     student.codice_fiscale = row["CodiceFiscale"]
-                    student.course_acronym = row[""]
+                    student.course_acronym = row["AcronimoCorso"]
                     student.last_name = row["Cognome"]
                     student.first_name = row["Nome"]
-                    student.email_user = row["EmailGSuite"]
+                    student.email_user = f"{row['Nome'].lower()}.{row['Cognome'].lower()}@stud.itsaltoadriatico.it" if row["EmailGSuite"] == "" else row["EmailGSuite"].lower()
                     student.phone_number = row["Tel"]
                     student.municipality_residence = row["ComuneRes"]
                     student.province_residence = row["ProvRes"]

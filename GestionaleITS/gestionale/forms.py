@@ -4,6 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 from datetime import datetime, timedelta
+from logging import disable
 from django import forms
 from django.forms import SelectDateWidget, ModelForm, formset_factory, BaseFormSet
 from .models import Supplier, Bundle, Computer, Accessory, Course, Student, Record, validate_image, StudentViewEditModel, Ticket
@@ -89,6 +90,34 @@ class SupplierForm(forms.ModelForm):
 
 
 class ComputerForm(forms.ModelForm):
+    choice = (
+        ("assigned", "Assegnato"),
+        ("in_stock", "In Magazzino"),
+        ("eol", "Eol"),
+        ("damaged", "Danneggiato"),
+        ("replaced", "Sostituito"),
+        ("in_repearing", "In Riparazione"),
+        ("disposed", "Smaltito")
+    )
+    choice_motv = (
+        (None, "Seleziona un motivo"),
+        ("deposit_paid", "Pagamento Effettuato"),
+        ("replacement", "Sostitutivo"),
+        ("temporary", "Temporaneo")
+    )
+    choice_retmotv = (
+        (None, "Seleziona un motivo"),
+        ("student_resigned", "Studente Dimesso"),
+        ("damaged","Danneggato"),
+        ("not_necessary", "Non più necessario"),
+     
+    )
+    status = forms.ChoiceField(choices=choice, initial = "", label="Status")
+    assignment_date = forms.DateField(widget=SelectDateWidget(), label="Data di assegnazione", required=False)
+    assignment_motivation = forms.ChoiceField(choices=choice_motv, label="Motivazione di assegnazione", required=False)
+    return_date = forms.DateField(widget=SelectDateWidget(), label="Data di restituzione", required=False)
+    return_motivation = forms.ChoiceField(choices=choice_retmotv, label="Motivazione di restituzione", required=False)
+    eol_date = forms.DateField(widget=SelectDateWidget(), label="Data di Eol: ", required= False, disabled=True)
     class Meta:
         model = Computer
         fields = "__all__"
@@ -104,12 +133,13 @@ class ComputerForm(forms.ModelForm):
             "eol_date": "Data di eol",
             "notes": "Note",
             "cespite": "Cespite",
-            "serial": "Seriale"
+            "serial": "Seriale",
+            "is_deleted": "É cancellato?"
         }
 
 class CespiteForm(forms.Form):
     cespite = forms.CharField(label="Cespite")
-    seriale = forms.CharField(label="Seriale")
+    serial = forms.CharField(label="Seriale")
 
 class AccessoryForm(forms.ModelForm):
     class Meta:
@@ -123,6 +153,30 @@ class AccessoryForm(forms.ModelForm):
 
 
 class EditAccessoryForm(forms.ModelForm):
+    choice= (
+        ("assigned", "Assegnato"),
+        ("in_stock", "In Magazzino"),
+        ("damaged", "Danneggiato"),
+        ("replaced", "Sostituito"),
+        ("in_repearing", "In Riparazione"),
+        ("disposed","Smaltito")
+    )
+    choice_motv = (
+        (None, "Seleziona un motivo"),
+        ("needed", "Necessario"),
+        ("replacement", "Sostitutivo"),
+        ("temporary", "Temporaneo")
+    )
+    choice_retmotv = (
+        (None, "Seleziona un motivo"),
+        ("not_necessary", "Non più necessario"),
+        ("damaged", "Danneggiato")
+    )
+    status = forms.ChoiceField(choices=choice, initial = "", label="Status")
+    assignment_date = forms.DateField(widget=SelectDateWidget(), label="Data di assegnazione", required=False)
+    assignment_motivation = forms.ChoiceField(choices=choice_motv, label="Motivazione di assegnazione", required=False)
+    return_date = forms.DateField(widget=SelectDateWidget(), label="Data di restituzione", required=False)
+    return_motivation = forms.ChoiceField(choices=choice_retmotv, label="Motivazione di restituzione", required=False)
     class Meta:
         model = Accessory
         fields = "__all__"
@@ -138,13 +192,6 @@ class EditAccessoryForm(forms.ModelForm):
             "return_motivation": "Motivazione di restituzione",
             "notes": "Note",
         }
-        exclude = [
-            "assignment_date",
-            "assignment_motivation",
-            "return_date",
-            "return_motivation"
-        ]
-
 
 class CSVUpdateForm(forms.Form):
     file = forms.FileField(label="Seleziona un file CSV")
@@ -165,7 +212,6 @@ class CourseForm(forms.ModelForm):
 
 
 class ResignationForm(forms.ModelForm):
-
     resignation_date = forms.DateField(widget=SelectDateWidget(), label="Data di Dimissioni:", initial=datetime.now().date())
     class Meta:
         model = Student
@@ -173,6 +219,8 @@ class ResignationForm(forms.ModelForm):
 
 
 class StudentForm(forms.ModelForm):
+    birth_date = forms.DateField(widget=SelectDateWidget(), label="Data di Nascita")
+    resignation_date = forms.DateField(widget=SelectDateWidget(), label="Data di Dimissioni:")
     class Meta:
         model = Student
         fields= "__all__"
