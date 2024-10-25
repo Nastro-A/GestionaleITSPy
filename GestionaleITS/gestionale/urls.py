@@ -59,7 +59,9 @@ urlpatterns = [
     path("import/students", views.import_students, name="import_students"),
     path("import/serials", views.import_serials, name="import_serials"),
     path("import/courses", views.import_courses, name="import_courses"),
-    
+
+    path("export/computers/<int:id_b>", views.export_computers, name="export_computers"),
+
     path("toggle/course/<int:id>", views.toggle_course, name="toggle_course"),
 
     path("take/ticket/<int:id>", views.take_ticket, name="take_ticket"),

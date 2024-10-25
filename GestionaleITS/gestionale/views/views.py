@@ -8,6 +8,7 @@ import copy
 import csv
 from datetime import datetime
 
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.defaults import bad_request
 
@@ -242,3 +243,24 @@ def take_ticket(request, id):
         return redirect("tickets")
     else:
        return bad_request
+
+@user_passes_test(lambda u: u.is_superuser or u.is_staff )
+def export_computers(request, id_b):
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=export_computers.csv"}
+    )
+    writer = csv.writer(response)
+    writer.writerow(["Nome", "Cognome", "Corso", "CodiceFiscale", "Cespite", "Seriale", "DataConsegna"])
+    computers = Computer.objects.filter(status="assigned", id_bundle = id_b).order_by("id")
+    for computer in computers:
+        writer.writerow([
+            computer.id_student.first_name,
+            computer.id_student.last_name,
+            computer.id_student.course_id.course_name,
+            computer.id_student.codice_fiscale,
+            computer.cespite,
+            computer.serial,
+            computer.assignment_date
+        ])
+    return response

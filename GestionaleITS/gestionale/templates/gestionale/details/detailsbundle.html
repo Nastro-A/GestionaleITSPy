@@ -10,7 +10,8 @@
 
 <div class="detail-content">
   {% if bundle.product_type == "Computer" %}
-  <a href="/import/serials" class="pure-button pure-button-primary add-button">Importa Computer</a>
+    <a href="/import/serials" class="pure-button pure-button-primary add-button">Importa Computer</a>
+    <a href="/export/computers/{{ bundle.id }}" class="pure-button pure-button-primary add-button">Esporta Computer Assegnati</a>
   {% endif  %}
 <table class="pure-table pure-table-horizontal width-100">
     <thead>
