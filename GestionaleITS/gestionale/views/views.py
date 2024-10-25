@@ -60,12 +60,16 @@ def import_students(request):
                 for row in reader:
                     course = get_object_or_404(Course, course_code=row["CodiceCorso"])
                     birth_date = datetime.strptime(row["DataNascita"], "%m/%d/%Y")
+                    if row["DataDimissioni"] == "":
+                        resignation_date = None
+                    else:
+                        resignation_date = datetime.strptime(row["DataDimissioni"], "%m/%d/$Y")
                     student = Student()
                     student.codice_fiscale = row["CodiceFiscale"]
                     student.course_acronym = row["AcronimoCorso"]
                     student.last_name = row["Cognome"]
                     student.first_name = row["Nome"]
-                    student.email_user = f"{row['Nome'].lower()}.{row['Cognome'].lower()}@stud.itsaltoadriatico.it" if row["EmailGSuite"] == "" else row["EmailGSuite"].lower()
+                    student.email_user = f"{row['Nome'].strip().replace(" ", "").lower()}.{row['Cognome'].strip().replace(" ","").lower()}@stud.itsaltoadriatico.it" if row["EmailGSuite"] == "" else row["EmailGSuite"].lower()
                     student.phone_number = row["Tel"]
                     student.municipality_residence = row["ComuneRes"]
                     student.province_residence = row["ProvRes"]
@@ -73,7 +77,7 @@ def import_students(request):
                     student.birth_date = birth_date
                     student.municipality_birth = row["ComuneNascita"]
                     student.province_birth = row["ProvNascita"]
-                    student.resignation_date = None if row["DataDimissioni"]=="" else row["DataDimissioni"]
+                    student.resignation_date = resignation_date
                     student.gender = row["Sex"]
                     student.nation_birth = row["NazioneNasc"]
                     student.course_id = course
@@ -122,11 +126,11 @@ def import_courses(request):
                 for row in reader:
                     course = Course()
                     course.course_name = row["Nome"]
-                    course.course_name_extended = row["Nome Esteso"]
+                    course.course_name_extended = row["NomeEsteso"]
                     course.course_code = row["Codice"]
                     course.course_year = row["Anno"]
                     course.course_location = row["Posizione"]
-                    course.student_number = row["Numero Studenti"]
+                    course.student_number = row["NumeroStudenti"]
                     if row["Status"] == 0:
                         course.course_status = False
                     else:
@@ -177,7 +181,7 @@ def import_serials(request):
                 csv_data = csv_file.read().decode("utf-8").splitlines()
                 reader = csv.DictReader(csv_data)
                 for row in reader:
-                    bundle = get_object_or_404(Bundle, id = row["Id Bundle"])
+                    bundle = get_object_or_404(Bundle, id = row["IdBundle"])
                     computer = Computer()
                     computer.id_bundle = bundle
                     computer.status = "in_stock"
