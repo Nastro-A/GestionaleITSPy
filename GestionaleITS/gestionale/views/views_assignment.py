@@ -132,7 +132,7 @@ def assignment_cespite(request):
                 computer = get_object_or_404(Computer, serial=form["serial"])
                 computer_copy = copy.deepcopy(computer)
                 computer.cespite = form["cespite"]
-                computer.save
+                computer.save()
                 
                 record.date = datetime.now().date()
                 record.action = "assignment"

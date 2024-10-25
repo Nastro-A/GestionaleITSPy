@@ -12,16 +12,16 @@
     <p>{{ err_str }}</p>
 </div>
 {% endif %}
-<h3>Stai modificando: </h3>
+<h3>Stai modificando lo studente {{ id }}:</h3>
 <form action="/edit/student/{{ id }}" method="post" enctype="multipart/form-data" class="pure-form pure-form-2 pure-form-stacked">
     {% csrf_token %}
     <div class="from-content width-100">
     {{ form }}
-        </div>
-        <div class="form-buttons">
-    <button type="submit" class="pure-button pure-button-primary">Modifica</button>
-    <button type="reset" class="pure-button button-warning">Reset</button>
-        </div>
+    </div>
+    <div class="form-buttons">
+	  <button type="submit" class="pure-button pure-button-primary">Modifica</button>
+	  <button type="reset" class="pure-button button-warning">Reset</button>
+    </div>
 </form>
 {% endif %}
 {% endblock %}

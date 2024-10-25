@@ -16,12 +16,11 @@ class BundleForm(forms.ModelForm):
         ("Accessory", "Accessorio"),
         ("Computer", "Computer")
     )
-    product_type = forms.ChoiceField(choices=type_choices, initial="")
-    delivery_date = forms.DateField(widget=SelectDateWidget(), initial=datetime.now().date() )
+    product_type = forms.ChoiceField(choices=type_choices, initial="", label= "Tipo prodotto")
+    delivery_date = forms.DateField(widget=SelectDateWidget(), initial=datetime.now().date(), label="Data di Consegna")
     class Meta:
         model = Bundle
         fields = "__all__"
-
         labels = {
             "product_type": "Tipo Prodotto",
             "product_name": "Nome Prodotto",
@@ -219,8 +218,14 @@ class ResignationForm(forms.ModelForm):
 
 
 class StudentForm(forms.ModelForm):
+    choice=(
+        ("ok","Ok"),
+        ("resigned", "Dimesso")
+    )
+    
     birth_date = forms.DateField(widget=SelectDateWidget(), label="Data di Nascita")
-    resignation_date = forms.DateField(widget=SelectDateWidget(), label="Data di Dimissioni:")
+    resignation_date = forms.DateField(widget=SelectDateWidget(), required=False, label="Data di Dimissioni:")
+    student_status = forms.ChoiceField(choices=choice, label="Status Studente")
     class Meta:
         model = Student
         fields= "__all__"
@@ -248,7 +253,7 @@ class StudentForm(forms.ModelForm):
             "nation_birth": "Nazione di Nascita",
             "course_id": "Corso"
         }
-        exclude = ["course_acronym", "course_code", "course_status", "course_year", "course_name"]
+        exclude = ["course_code", "course_status", "course_year", "course_name"]
 
 
 class AssignmentComputerForm(forms.Form):

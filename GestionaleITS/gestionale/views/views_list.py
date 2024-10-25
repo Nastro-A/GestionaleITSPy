@@ -11,7 +11,7 @@ from ..models import Bundle, Supplier, Student, Course, Ticket
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def storage(request):
-    bundles = Bundle.objects.all()
+    bundles = Bundle.objects.all().order_by("-id")
     if request.method == "GET":
         return render(request, "gestionale/list/storage.html", {
             "bundles": bundles
@@ -31,7 +31,7 @@ def suppliers(request):
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def students(request):
-    students = Student.objects.all().order_by("course_acronym")
+    students = Student.objects.all().order_by("course_id")
     if request.method == "GET":
         return render(request, "gestionale/list/students.html", {
             "students": students
