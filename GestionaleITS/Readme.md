@@ -77,6 +77,7 @@ networks:
 
 # TODO
 
+- Creare un export dei pc in csv con Nome Cognome Codice fiscale cespite seriale data di consegna
 - Default value of association "Pagamento effettuato"
 - import of storage, computers, courses.
 - Tables Sorting with filters

@@ -51,25 +51,28 @@ def assignment_computer(request):
 
             except Http404:
                 form = AssignmentComputerForm()
+                success = False
                 err = True
                 err_str = "Uno o più dei valori inseriti non é stato trovato"
                 return render(request, "gestionale/assignment/assignment_computer.html", {
-                    "err": err, "err_str": err_str, "form": form
+                    "err": err, "err_str": err_str, "form": form, "success": success
                 })
         else:
             form = AssignmentComputerForm()
+            success = False
             err = True
             err_str = "L'inserimento è incompleto o errato!"
             return render(request, "gestionale/assignment/assignment_computer.html", {
-                "err": err, "err_str": err_str, "form": form
+                "err": err, "err_str": err_str, "form": form, "success": success
             })
         return redirect("assignment_computer")
     else:
         form = AssignmentComputerForm()
+        success = True
         err = False
         err_str = ""
         return render(request, "gestionale/assignment/assignment_computer.html", {
-            "form": form, "err": err, "err_str": err_str
+            "form": form, "err": err, "err_str": err_str, "success": success
         })
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
@@ -100,25 +103,28 @@ def assignment_accessory(request):
 
             except Http404:
                 form = AssignmentAccessoryForm()
+                success = False
                 err = True
                 err_str = "Uno o più dei valori inseriti non é stato trovato"
                 return render(request, "gestionale/assignment/assignment_accessory.html", {
-                    "err": err, "err_str": err_str, "form": form
+                    "err": err, "err_str": err_str, "form": form, "success": success
                 })
         else:
             form = AssignmentAccessoryForm()
+            success = False
             err = True
             err_str = "L'inserimento è incompleto o errato!"
             return render(request, "gestionale/assignment/assignment_accessory.html", {
-                "err": err, "err_str": err_str, "form": form
+                "err": err, "err_str": err_str, "form": form, "success": success
             })
         return redirect("assignment_accessory")
     else:
         form = AssignmentAccessoryForm()
+        success = True
         err = False
         err_str = ""
         return render(request, "gestionale/assignment/assignment_accessory.html", {
-            "form": form, "err": err, "err_str": err_str
+            "form": form, "err": err, "err_str": err_str, "success": success
         })
     
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
@@ -143,21 +149,26 @@ def assignment_cespite(request):
                 record.save()
             except Http404:
                 form = CespiteForm()
+                success = False
                 err = True
                 err_str = "Uno o più dei valori inseriti non é stato trovato"
                 return render(request, "gestionale/assignment/cespite.html", {
-                    "err": err, "err_str": err_str, "form": form
+                    "err": err, "err_str": err_str, "form": form, "success": success
                 })
             return redirect("assignment_cespite")
         else:
             form = CespiteForm()
+            success = False
             err = True
             err_str = "L'inserimento é incompleto o errato!"
             return render(request, "gestionale/assignment/cespite.html", {
-                "form": form, "err": err, "err_str": err_str})
+                "form": form, "err": err, "err_str": err_str , "success": success })
         
     else:
         form = CespiteForm()
+        success = True
+        err = False
+        err_str = ""
         return render(request, "gestionale/assignment/cespite.html", {
-            "form": form})
+            "form": form , "err": err, "err_str": err_str, "success": success })
         
