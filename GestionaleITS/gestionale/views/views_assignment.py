@@ -23,14 +23,15 @@ def assignment(request):
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def assignment_computer(request):
+    success_ = None
     if request.method == "POST":
         form = AssignmentComputerForm(request.POST)
         if form.is_valid():
             form = form.cleaned_data
             try:
                 course = get_object_or_404(Course, course_code=form["course_code"])
-                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale"], course_id=course)
-                computer = get_object_or_404(Computer, serial=form["serial"])
+                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale"].upper(), course_id=course)
+                computer = get_object_or_404(Computer, serial=form["serial"].upper())
                 record = Record()
                 computer_copy = copy.deepcopy(computer)
                 record.prev_product_detail = computer_copy
@@ -51,39 +52,39 @@ def assignment_computer(request):
 
             except Http404:
                 form = AssignmentComputerForm()
-                success = False
+                success_ = False
                 err = True
                 err_str = "Uno o più dei valori inseriti non é stato trovato"
                 return render(request, "gestionale/assignment/assignment_computer.html", {
-                    "err": err, "err_str": err_str, "form": form, "success": success
+                    "err": err, "err_str": err_str, "form": form, "success": success_
                 })
         else:
             form = AssignmentComputerForm()
-            success = False
+            success_ = False
             err = True
             err_str = "L'inserimento è incompleto o errato!"
             return render(request, "gestionale/assignment/assignment_computer.html", {
-                "err": err, "err_str": err_str, "form": form, "success": success
+                "err": err, "err_str": err_str, "form": form, "success": success_
             })
         return redirect("assignment_computer")
     else:
         form = AssignmentComputerForm()
-        success = True
         err = False
         err_str = ""
         return render(request, "gestionale/assignment/assignment_computer.html", {
-            "form": form, "err": err, "err_str": err_str, "success": success
+            "form": form, "err": err, "err_str": err_str, "success": success_
         })
 
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def assignment_accessory(request):
+    success_ = None
     if request.method == "POST":
         form = AssignmentAccessoryForm(request.POST)
         if form.is_valid():
             form = form.cleaned_data
             try:
                 course = get_object_or_404(Course, course_code=form["course_code"])
-                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale"], course_id=course)
+                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale"].upper, course_id=course)
                 accessory = get_object_or_404(Accessory, id=form["id"])
                 record = Record()
                 accessory_copy = copy.deepcopy(accessory)
@@ -103,39 +104,39 @@ def assignment_accessory(request):
 
             except Http404:
                 form = AssignmentAccessoryForm()
-                success = False
+                success_ = False
                 err = True
                 err_str = "Uno o più dei valori inseriti non é stato trovato"
                 return render(request, "gestionale/assignment/assignment_accessory.html", {
-                    "err": err, "err_str": err_str, "form": form, "success": success
+                    "err": err, "err_str": err_str, "form": form, "success": success_
                 })
         else:
             form = AssignmentAccessoryForm()
-            success = False
+            success_ = False
             err = True
             err_str = "L'inserimento è incompleto o errato!"
             return render(request, "gestionale/assignment/assignment_accessory.html", {
-                "err": err, "err_str": err_str, "form": form, "success": success
+                "err": err, "err_str": err_str, "form": form, "success": success_
             })
         return redirect("assignment_accessory")
     else:
         form = AssignmentAccessoryForm()
-        success = True
         err = False
         err_str = ""
         return render(request, "gestionale/assignment/assignment_accessory.html", {
-            "form": form, "err": err, "err_str": err_str, "success": success
+            "form": form, "err": err, "err_str": err_str, "success": success_
         })
     
 @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def assignment_cespite(request):
+    success_ = None
     if request.method == "POST":
         form = CespiteForm(request.POST)
         if form.is_valid():
             form = form.cleaned_data
             try:
                 record = Record()
-                computer = get_object_or_404(Computer, serial=form["serial"])
+                computer = get_object_or_404(Computer, serial=form["serial"].upper())
                 computer_copy = copy.deepcopy(computer)
                 computer.cespite = form["cespite"]
                 computer.save()
@@ -149,26 +150,25 @@ def assignment_cespite(request):
                 record.save()
             except Http404:
                 form = CespiteForm()
-                success = False
+                success_ = False
                 err = True
                 err_str = "Uno o più dei valori inseriti non é stato trovato"
                 return render(request, "gestionale/assignment/cespite.html", {
-                    "err": err, "err_str": err_str, "form": form, "success": success
+                    "err": err, "err_str": err_str, "form": form, "success": success_
                 })
             return redirect("assignment_cespite")
         else:
             form = CespiteForm()
-            success = False
+            success_ = False
             err = True
             err_str = "L'inserimento é incompleto o errato!"
             return render(request, "gestionale/assignment/cespite.html", {
-                "form": form, "err": err, "err_str": err_str , "success": success })
+                "form": form, "err": err, "err_str": err_str , "success": success_ })
         
     else:
         form = CespiteForm()
-        success = True
         err = False
         err_str = ""
         return render(request, "gestionale/assignment/cespite.html", {
-            "form": form , "err": err, "err_str": err_str, "success": success })
+            "form": form , "err": err, "err_str": err_str, "success": success_ })
         
