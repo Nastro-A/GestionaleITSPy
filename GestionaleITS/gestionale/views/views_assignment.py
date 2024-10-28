@@ -30,8 +30,8 @@ def assignment_computer(request):
             form = form.cleaned_data
             try:
                 course = get_object_or_404(Course, course_code=form["course_code"])
-                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale".upper()], course_id=course)
-                computer = get_object_or_404(Computer, serial=form["serial".upper()])
+                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale"], course_id=course)
+                computer = get_object_or_404(Computer, serial=form["serial"])
                 record = Record()
                 computer_copy = copy.deepcopy(computer)
                 record.prev_product_detail = computer_copy
@@ -84,7 +84,7 @@ def assignment_accessory(request):
             form = form.cleaned_data
             try:
                 course = get_object_or_404(Course, course_code=form["course_code"])
-                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale".upper()], course_id=course)
+                student = get_object_or_404(Student, codice_fiscale=form["codice_fiscale"], course_id=course)
                 accessory = get_object_or_404(Accessory, id=form["id"])
                 record = Record()
                 accessory_copy = copy.deepcopy(accessory)
@@ -136,9 +136,9 @@ def assignment_cespite(request):
             form = form.cleaned_data
             try:
                 record = Record()
-                computer = get_object_or_404(Computer, serial=form["serial".upper()])
+                computer = get_object_or_404(Computer, serial=form["serial"])
                 computer_copy = copy.deepcopy(computer)
-                computer.cespite = form["cespite".upper()]
+                computer.cespite = form["cespite"]
                 computer.save()
                 
                 record.date = datetime.now().date()
